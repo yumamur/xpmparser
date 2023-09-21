@@ -11,8 +11,8 @@ void	print_imgdata(t_xpm *img)
 	i = 0;
 	while (i < img->cn)
 	{
-		printf("colour %u\tkey \"%s\"\tval \"%s\"\n",
-			i, img->clr[i].key, img->clr[i].val);
+		printf("colour\t%u\t\b\b\b\b= key \"%s\"\tval \"%s\"\n",
+			i, img->clr.key[i], img->clr.val[i]);
 		++i;
 	}
 	i = 0;

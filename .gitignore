@@ -1,0 +1,4 @@
+*.o
+*.xpm
+*.out
+main.c

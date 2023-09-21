@@ -1,6 +1,6 @@
 #include "xpmft_int.h"
 
-static int	parse_values(const t_mmap *data, t_xpm *img)
+static int	parse_values(const t_file *data, t_xpm *img)
 {
 	char	**tab;
 
@@ -15,23 +15,35 @@ static int	parse_values(const t_mmap *data, t_xpm *img)
 	return (0);
 }
 
-static int	parse_colours(const t_mmap *data, t_xpm *img)
+static int	parse_colours(const t_file *data, t_xpm *img)
 {
 	t_uint	clr_num;
 
-	img->clr = malloc(img->cn * sizeof(t_colour));
-	if (!img->clr)
+	img->clr.key = malloc(img->cn * sizeof(char *));
+	if (!img->clr.key)
 		return (-1);
+	img->clr.val = malloc(img->cn * sizeof(char *));
+	if (!img->clr.val)
+	{
+		free(img->clr.key);
+		return (-1);
+	}
 	clr_num = 0;
 	while (clr_num < img->cn)
 	{
-		img->clr[clr_num++] = xpmparse_colour_row(xpmparse_get_row(data),
-				img->cpp);
+		if (xpmparse_colour_row(xpmparse_get_row(data), img->clr.key + clr_num,
+				img->clr.val + clr_num, img->cpp))
+		{
+			free(img->clr.key);
+			free(img->clr.val);
+			return (-1);
+		}
+		++clr_num;
 	}
 	return (0);
 }
 
-static int	parse_pixels(const t_mmap *data, t_xpm *img)
+static int	parse_pixels(const t_file *data, t_xpm *img)
 {
 	t_ulong	row;
 
@@ -47,27 +59,15 @@ static int	parse_pixels(const t_mmap *data, t_xpm *img)
 	return (0);
 }
 
-t_mmap	load_file(const char *file_name)
-{
-	int		fd;
-	t_mmap	data;
-
-	fd = open(file_name, O_RDONLY);
-	data.size = lseek(fd, 0, SEEK_END);
-	data.addr = mmap(0, data.size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, 0);
-	close(fd);
-	return (data);
-}
-
 void	*ft_xpm_convert(const char *file_name)
 {
 	t_xpm	*img;
-	t_mmap	data;
+	t_file	data;
 
 	img = malloc(sizeof(t_xpm));
 	if (!img)
 		return (NULL);
-	data = load_file(file_name);
+	data = file_load(file_name);
 	if (!data.addr || !data.size)
 		return (NULL);
 	if (xpmparse_remove_comment(&data))
@@ -78,5 +78,6 @@ void	*ft_xpm_convert(const char *file_name)
 		return (NULL);
 	if (parse_pixels(&data, img))
 		return (NULL);
+	file_destroy(&data);
 	return (img);
 }

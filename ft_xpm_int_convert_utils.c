@@ -1,6 +1,6 @@
 #include "xpmft_int.h"
 
-int	xpmparse_remove_comment(const t_mmap *data)
+int	xpmparse_remove_comment(const t_file *data)
 {
 	int	com_begin;
 	int	com_len;
@@ -11,10 +11,10 @@ int	xpmparse_remove_comment(const t_mmap *data)
 		if (com_begin == -1)
 			break ;
 		com_len = ft_pos_strstr_quote(data->addr + com_begin + 2,
-				"*/", data->size);
+				"*/", data->size) + 4;
 		if (com_len == -1)
 			return (-1);
-		memmove(data->addr + com_begin, data->addr + com_begin + com_len + 4,
+		memmove(data->addr + com_begin, data->addr + com_begin + com_len,
 			data->size - com_begin - com_len);
 		com_begin = ft_pos_strstr_quote(data->addr, "//", data->size);
 		if (com_begin == -1)
@@ -28,7 +28,7 @@ int	xpmparse_remove_comment(const t_mmap *data)
 	return (0);
 }
 
-char	*xpmparse_get_row(const t_mmap *data)
+char	*xpmparse_get_row(const t_file *data)
 {
 	char		*row;
 	static void	*ptr;
@@ -43,60 +43,62 @@ char	*xpmparse_get_row(const t_mmap *data)
 	return (row);
 }
 
-t_colour	xpmparse_colour_row(char *row, unsigned long cpp)
+int	xpmparse_colour_row(char *row, char **key, char **val, t_ulong cpp)
 {
-	t_colour	ret;
 	t_ulong		len;
 
 	if (cpp >= strlen(row) - 6)
-		return ((t_colour){});
-	ret.key = malloc(cpp + 1);
-	if (ret.key)
+		return (-1);
+	*key = malloc(cpp + 1);
+	if (*key)
 	{
-		memcpy(ret.key, row, cpp);
-		ret.key[cpp] = 0;
+		memcpy(*key, row, cpp);
+		(*key)[cpp] = 0;
 		row += cpp;
 		while (*row && *row != 'c' && *row != 'm'
 			&& *row != 's' && *row != 'g')
 			++row;
 		len = strlen(row);
-		ret.val = malloc(len + 1);
-		if (ret.val)
+		*val = malloc(len + 1);
+		if (*val)
 		{
-			memcpy(ret.val, row, len);
-			ret.val[len] = 0;
-			return (ret);
+			memcpy(*val, row, len);
+			(*val)[len] = 0;
+			return (0);
 		}
-		free(ret.key);
+		free(*key);
 	}
-	return ((t_colour){});
+	return (-1);
 }
 
-static t_uint	xpmparse_find_colour(t_xpm *img, char *row)
+int	xpmparse_find_colour(t_xpm *img, char *row)
 {
 	t_uint	i;
 
 	i = 0;
 	while (i < img->cn)
 	{
-		if (!memcmp(row, img->clr[i].key, img->cpp))
+		if (!memcmp(row, img->clr.key[i], img->cpp))
 			return (i);
 		++i;
 	}
-	return (i);
+	return (-1);
 }
 
 void	xpmparse_pixel_row(char *row, t_xpm *xpm, t_ulong row_nbr)
 {
 	t_ulong	i;
+	t_ulong	len;
 
 	i = 0;
-	while (i < xpm->width && strlen(row) >= xpm->cpp)
+	len = strlen(row);
+	while (i < xpm->width && len >= xpm->cpp)
 	{
 		xpm->data[row_nbr][i] = xpmparse_find_colour(xpm, row);
 		++i;
 		row += xpm->cpp;
+		len -= xpm->cpp;
 	}
 	while (i < xpm->width)
-		xpm->data[row_nbr][i] = 0;
+		xpm->data[row_nbr][i] = -1;
 }

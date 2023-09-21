@@ -5,13 +5,12 @@
 # include <unistd.h>
 # include <fcntl.h>
 # include <stdlib.h>
-# include <sys/mman.h>
 # include "typeft.h"
 
 typedef struct s_colour
 {
-	char	*key;
-	char	*val;
+	char	**key;
+	char	**val;
 }	t_colour;
 
 typedef struct s_xpm
@@ -20,25 +19,29 @@ typedef struct s_xpm
 	t_uint		height;
 	t_uint		cn;
 	t_uint		cpp;
-	t_colour	*clr;
+	t_colour	clr;
 	t_uint		**data;
 }	t_xpm;
 
-typedef struct s_mmap
+typedef struct s_file
 {
 	void	*addr;
 	t_ulong	size;
-}	t_mmap;
+}	t_file;
 
+t_file		file_load(const char *file_name);
+void		file_destroy(t_file *file);
 void		*ft_2d_malloc(t_ulong col, t_ulong row, t_ulong size);
+void		*ft_2d_calloc(t_ulong col, t_ulong row, t_ulong size);
 
 int			ft_pos_strstr_quote(char *str, char *to_find, t_ulong size);
 int			ft_pos_strstr(char *str, char *to_find, t_ulong size);
 char		**ft_str_wordtab(char *str);
 
-int			xpmparse_remove_comment(const t_mmap *data);
+int			xpmparse_remove_comment(const t_file *data);
+char		*xpmparse_get_row(const t_file *data);
 
-char		*xpmparse_get_row(const t_mmap *data);
-t_colour	xpmparse_colour_row(char *row, t_ulong cpp);
+int			xpmparse_colour_row(char *row, char **key, char **val, t_ulong cpp);
+int			xpmparse_find_colour(t_xpm *img, char *row);
 void		xpmparse_pixel_row(char *row, t_xpm *xpm, t_ulong row_nbr);
 #endif

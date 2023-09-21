@@ -2,19 +2,17 @@
 
 int	main(int argc, char *argv[])
 {
-	void	*img1;
-	void	*img2;
-	void	*img3;
+	void	*img;
+	int		i;
 
 	if (argc < 2)
 		return (0);
-	img3 = ft_xpm_convert(argv[argc - 3]);
-	print_imgdata(img3);
-	img2 = ft_xpm_convert(argv[argc - 2]);
-	print_imgdata(img2);
-	img1 = ft_xpm_convert(argv[argc - 1]);
-	print_imgdata(img1);
-	ft_xpm_destroy(img3);
-	ft_xpm_destroy(img2);
-	ft_xpm_destroy(img1);
+	i = 1;
+	while (i < argc)
+	{
+		img = ft_xpm_convert(argv[i]);
+		print_imgdata(img);
+		ft_xpm_destroy(img);
+		++i;
+	}
 }

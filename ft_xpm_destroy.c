@@ -9,11 +9,12 @@ void	ft_xpm_destroy(t_xpm *img)
 		i = 0;
 		while (i < img->cn)
 		{
-			free(img->clr[i].key);
-			free(img->clr[i].val);
+			free(img->clr.key[i]);
+			free(img->clr.val[i]);
 			++i;
 		}
-		free(img->clr);
+		free(img->clr.key);
+		free(img->clr.val);
 		free(img->data);
 		free(img);
 	}
