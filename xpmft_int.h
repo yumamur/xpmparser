@@ -7,10 +7,18 @@
 # include <stdlib.h>
 # include "typeft.h"
 
+typedef struct s_colourkeys
+{
+	char	*c;
+	char	*s;
+	char	*m;
+	char	*g;
+}	t_colourkeys;
+
 typedef struct s_colour
 {
-	char	**key;
-	char	**val;
+	char			**chars;
+	t_colourkeys	*keys;
 }	t_colour;
 
 typedef struct s_xpm
@@ -41,7 +49,7 @@ char		**ft_str_wordtab(char *str);
 int			xpmparse_remove_comment(const t_file *data);
 char		*xpmparse_get_row(const t_file *data);
 
-int			xpmparse_colour_row(char *row, char **key, char **val, t_ulong cpp);
+int			xpmparse_colour_row(char *row, t_colour *clr, t_uint index, t_ulong cpp);
 int			xpmparse_find_colour(t_xpm *img, char *row);
 void		xpmparse_pixel_row(char *row, t_xpm *xpm, t_ulong row_nbr);
 #endif

@@ -43,48 +43,6 @@ char	*xpmparse_get_row(const t_file *data)
 	return (row);
 }
 
-int	xpmparse_colour_row(char *row, char **key, char **val, t_ulong cpp)
-{
-	t_ulong		len;
-
-	if (cpp >= strlen(row) - 6)
-		return (-1);
-	*key = malloc(cpp + 1);
-	if (*key)
-	{
-		memcpy(*key, row, cpp);
-		(*key)[cpp] = 0;
-		row += cpp;
-		while (*row && *row != 'c' && *row != 'm'
-			&& *row != 's' && *row != 'g')
-			++row;
-		len = strlen(row);
-		*val = malloc(len + 1);
-		if (*val)
-		{
-			memcpy(*val, row, len);
-			(*val)[len] = 0;
-			return (0);
-		}
-		free(*key);
-	}
-	return (-1);
-}
-
-int	xpmparse_find_colour(t_xpm *img, char *row)
-{
-	t_uint	i;
-
-	i = 0;
-	while (i < img->cn)
-	{
-		if (!memcmp(row, img->clr.key[i], img->cpp))
-			return (i);
-		++i;
-	}
-	return (-1);
-}
-
 void	xpmparse_pixel_row(char *row, t_xpm *xpm, t_ulong row_nbr)
 {
 	t_ulong	i;

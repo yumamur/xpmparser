@@ -19,23 +19,23 @@ static int	parse_colours(const t_file *data, t_xpm *img)
 {
 	t_uint	clr_num;
 
-	img->clr.key = malloc(img->cn * sizeof(char *));
-	if (!img->clr.key)
+	img->clr.chars = malloc(img->cn * sizeof(char *));
+	if (!img->clr.chars)
 		return (-1);
-	img->clr.val = malloc(img->cn * sizeof(char *));
-	if (!img->clr.val)
+	img->clr.keys = malloc(img->cn * sizeof(*img->clr.keys));
+	if (!img->clr.keys)
 	{
-		free(img->clr.key);
+		free(img->clr.chars);
 		return (-1);
 	}
 	clr_num = 0;
 	while (clr_num < img->cn)
 	{
-		if (xpmparse_colour_row(xpmparse_get_row(data), img->clr.key + clr_num,
-				img->clr.val + clr_num, img->cpp))
+		if (xpmparse_colour_row(xpmparse_get_row(data),
+				&img->clr, clr_num, img->cpp))
 		{
-			free(img->clr.key);
-			free(img->clr.val);
+			free(img->clr.chars);
+			free(img->clr.keys);
 			return (-1);
 		}
 		++clr_num;

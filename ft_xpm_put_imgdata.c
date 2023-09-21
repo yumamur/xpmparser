@@ -12,7 +12,7 @@ void	print_imgdata(t_xpm *img)
 	while (i < img->cn)
 	{
 		printf("colour\t%u\t\b\b\b\b= key \"%s\"\tval \"%s\"\n",
-			i, img->clr.key[i], img->clr.val[i]);
+			i, img->clr.s_keys[i].c, img->clr.chars[i]);
 		++i;
 	}
 	i = 0;
