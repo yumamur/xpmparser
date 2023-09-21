@@ -1,7 +1,9 @@
-#include <stdlib.h>
+// #include <stdlib.h>
+#include "xpmft_int.h"
 
 static int	count_words(char *str)
 {
+	DEBUG_FUNC();
 	int	ret;
 
 	ret = 0;
@@ -19,6 +21,7 @@ static int	count_words(char *str)
 
 char	**ft_str_wordtab(char *str)
 {
+	DEBUG_FUNC();
 	char	**ret;
 	int		ct_word;
 

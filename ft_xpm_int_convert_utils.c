@@ -2,6 +2,7 @@
 
 int	xpmparse_remove_comment(const t_file *data)
 {
+	DEBUG_FUNC();
 	int	com_begin;
 	int	com_len;
 
@@ -30,6 +31,7 @@ int	xpmparse_remove_comment(const t_file *data)
 
 char	*xpmparse_get_row(const t_file *data)
 {
+	DEBUG_FUNC();
 	char		*row;
 	static void	*ptr;
 
@@ -43,20 +45,24 @@ char	*xpmparse_get_row(const t_file *data)
 	return (row);
 }
 
-void	xpmparse_pixel_row(char *row, t_xpm *xpm, t_ulong row_nbr)
+void	xpmparse_pixel_row(char *row, t_xpm *img, t_ulong row_nbr)
 {
+	DEBUG_FUNC();
 	t_ulong	i;
 	t_ulong	len;
 
 	i = 0;
 	len = strlen(row);
-	while (i < xpm->width && len >= xpm->cpp)
+	while (i < img->width && len >= img->cpp)
 	{
-		xpm->data[row_nbr][i] = xpmparse_find_colour(xpm, row);
+		img->data[row_nbr][i] = xpmparse_find_colour(img, row);
 		++i;
-		row += xpm->cpp;
-		len -= xpm->cpp;
+		row += img->cpp;
+		len -= img->cpp;
 	}
-	while (i < xpm->width)
-		xpm->data[row_nbr][i] = -1;
+	while (i < img->width)
+	{
+		img->data[row_nbr][i] = -1;
+		++i;
+	}
 }

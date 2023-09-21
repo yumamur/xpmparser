@@ -2,6 +2,7 @@
 
 void	*ft_xpm_new(t_ulong width, t_ulong height)
 {
+	DEBUG_FUNC();
 	t_xpm	*ret;
 
 	ret = malloc(sizeof(t_xpm));

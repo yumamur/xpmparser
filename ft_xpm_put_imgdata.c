@@ -1,21 +1,27 @@
-#include <stdio.h>
 #include "xpmft_int.h"
+#include <stdio.h>
 
 void	print_imgdata(t_xpm *img)
 {
+	DEBUG_FUNC();
 	t_uint	i;
 	t_uint	j;
 
+	printf("########################################\n");
 	printf("width\t%d\nheight\t%d\ncnumber\t%d\ncpp\t%d\n",
 		img->width, img->height, img->cn, img->cpp);
 	i = 0;
+	printf("===================================\n");
 	while (i < img->cn)
 	{
-		printf("colour\t%u\t\b\b\b\b= key \"%s\"\tval \"%s\"\n",
-			i, img->clr.s_keys[i].c, img->clr.chars[i]);
+		printf("colour\t%u\tchars = \"%s\"\n\t\tc_key \"%s\"\n\t\ts_key \"%s\"\n\t\tm_key \"%s\"\n\t\tg_key \"%s\"\n",
+			i, img->clr.chars[i], img->clr.keys[i].c, img->clr.keys[i].s, img->clr.keys[i].m, img->clr.keys[i].g);
 		++i;
+		if (i < img->cn)
+			printf("------------\n");
 	}
 	i = 0;
+	printf("===================================\n");
 	while (i < img->height)
 	{
 		j = 0;
@@ -27,4 +33,5 @@ void	print_imgdata(t_xpm *img)
 		++i;
 		printf("\n");
 	}
+	printf("########################################\n");
 }

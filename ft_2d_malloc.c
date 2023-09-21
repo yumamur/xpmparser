@@ -1,9 +1,11 @@
-#include <stdlib.h>
-#include <string.h>
-#include "typeft.h"
+// #include <stdlib.h>
+// #include <string.h>
+// #include "typeft.h"
+#include "xpmft_int.h"
 
 void	*ft_2d_malloc(t_ulong col, t_ulong row, t_ulong byte)
 {
+	DEBUG_FUNC();
 	void	**ret;
 	t_ulong	i;
 
@@ -20,6 +22,7 @@ void	*ft_2d_malloc(t_ulong col, t_ulong row, t_ulong byte)
 
 void	*ft_2d_calloc(t_ulong col, t_ulong row, t_ulong byte)
 {
+	DEBUG_FUNC();
 	void	**ret;
 	t_ulong	i;
 

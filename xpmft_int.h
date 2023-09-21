@@ -7,6 +7,16 @@
 # include <stdlib.h>
 # include "typeft.h"
 
+# ifdef DEBUG
+
+#  include <stdio.h>
+#  define DEBUG_FUNC() printf("Entering: %s\n", __func__);
+
+# else
+
+#  define DEBUG_FUNC() ;
+# endif
+
 typedef struct s_colourkeys
 {
 	char	*c;

@@ -2,6 +2,7 @@
 
 static int	parse_values(const t_file *data, t_xpm *img)
 {
+	DEBUG_FUNC();
 	char	**tab;
 
 	tab = ft_str_wordtab(xpmparse_get_row(data));
@@ -17,6 +18,7 @@ static int	parse_values(const t_file *data, t_xpm *img)
 
 static int	parse_colours(const t_file *data, t_xpm *img)
 {
+	DEBUG_FUNC();
 	t_uint	clr_num;
 
 	img->clr.chars = malloc(img->cn * sizeof(char *));
@@ -45,6 +47,7 @@ static int	parse_colours(const t_file *data, t_xpm *img)
 
 static int	parse_pixels(const t_file *data, t_xpm *img)
 {
+	DEBUG_FUNC();
 	t_ulong	row;
 
 	img->data = ft_2d_malloc(img->width, img->height, 4);
@@ -61,6 +64,7 @@ static int	parse_pixels(const t_file *data, t_xpm *img)
 
 void	*ft_xpm_convert(const char *file_name)
 {
+	DEBUG_FUNC();
 	t_xpm	*img;
 	t_file	data;
 

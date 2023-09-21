@@ -2,6 +2,7 @@
 
 int	ft_pos_strstr(char *str, char *to_find, t_ulong size)
 {
+	DEBUG_FUNC();
 	t_ulong	pos;
 	t_ulong	ctl;
 
@@ -24,6 +25,7 @@ int	ft_pos_strstr(char *str, char *to_find, t_ulong size)
 
 int	ft_pos_strstr_quote(char *str, char *to_find, t_ulong size)
 {
+	DEBUG_FUNC();
 	t_ulong	var[3];
 
 	if (strlen(to_find) > size)

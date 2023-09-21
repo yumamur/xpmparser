@@ -2,6 +2,7 @@
 
 void	ft_xpm_destroy(t_xpm *img)
 {
+	DEBUG_FUNC();
 	t_uint	i;
 
 	if (img)
@@ -10,14 +11,14 @@ void	ft_xpm_destroy(t_xpm *img)
 		while (i < img->cn)
 		{
 			free(img->clr.chars[i]);
-			free(img->clr.s_keys[i].c);
-			free(img->clr.s_keys[i].s);
-			free(img->clr.s_keys[i].m);
-			free(img->clr.s_keys[i].g);
+			free(img->clr.keys[i].c);
+			free(img->clr.keys[i].s);
+			free(img->clr.keys[i].m);
+			free(img->clr.keys[i].g);
 			++i;
 		}
 		free(img->clr.chars);
-		free(img->clr.s_keys);
+		free(img->clr.keys);
 		free(img->data);
 		free(img);
 	}
