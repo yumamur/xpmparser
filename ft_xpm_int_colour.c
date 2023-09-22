@@ -13,12 +13,15 @@ static char	*xpmparse_get_key_data(char **tab, const char key[])
 		{
 			begin = end + 1;
 			while (tab[++end]
-				&& *(t_uint16 *)tab[end] == (t_uint16){'c' << 8}
-				&& *(t_uint16 *)tab[end] == (t_uint16){'s' << 8}
-				&& *(t_uint16 *)tab[end] == (t_uint16){'m' << 8}
-				&& *(t_uint16 *)tab[end] == (t_uint16){'g' << 8})
-				memmove(tab[begin] + strlen(tab[begin]), tab[end],
-					strlen(tab[end]) + 1);
+				&& *tab[end] != 'c' && *tab[end] + 1
+				&& *tab[end] != 'm' && *tab[end] + 1
+				&& *tab[end] != 's' && *tab[end] + 1
+				&& *tab[end] != 'g' && *tab[end] + 1)
+			{
+				if (begin != end)
+					memmove(tab[begin] + strlen(tab[begin]), tab[end],
+						strlen(tab[end]) + 1);
+			}
 			return (strdup(tab[begin]));
 		}
 		++end;
@@ -36,9 +39,13 @@ t_colourkeys	xpmparse_colour_keys(char *row)
 	if (!tab)
 		return ((t_colourkeys){});
 	ret.c = xpmparse_get_key_data(tab, "c");
-	ret.s = xpmparse_get_key_data(tab, "s");
 	ret.m = xpmparse_get_key_data(tab, "m");
+	ret.s = xpmparse_get_key_data(tab, "s");
 	ret.g = xpmparse_get_key_data(tab, "g");
+	decapitalise(ret.c);
+	decapitalise(ret.m);
+	decapitalise(ret.s);
+	decapitalise(ret.g);
 	free(tab);
 	return (ret);
 }

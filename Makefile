@@ -2,6 +2,7 @@ CC = clang
 CFLAGS = -Wall -Werror -Wextra -fsanitize=address
 
 SRC = ft_2d_malloc.c \
+	  ft_decapitalise.c \
 	  ft_xpm_add_colour.c \
 	  ft_xpm_convert_file.c \
 	  ft_xpm_destroy.c \
@@ -18,15 +19,17 @@ OBJ = $(patsubst %.c, obj/%.o, $(SRC))
 .PHONY = all createdir main clean
 
 all: createdir $(OBJ)
+	@$(CC) $(CFLAGS) main.c $(OBJ)
+
+debug: CFLAGS += -DDEBUG
+debug: createdir $(OBJ)
+	@$(CC) $(CFLAGS) main.c $(OBJ)
 
 createdir:
 	@mkdir -p obj
 
 obj/%.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-
-main: main.c
-	@$(CC) $(CFLAGS) main.c $(OBJ)
 
 clean:
 	@rm -rf obj/

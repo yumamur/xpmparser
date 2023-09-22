@@ -1,7 +1,7 @@
 #include "xpmft_int.h"
 #include <stdio.h>
 
-void	print_imgdata(t_xpm *img)
+void	ft_xpm_put_imgdata(t_xpm *img)
 {
 	DEBUG_FUNC();
 	t_uint	i;
@@ -14,11 +14,13 @@ void	print_imgdata(t_xpm *img)
 	printf("===================================\n");
 	while (i < img->cn)
 	{
-		printf("colour\t%u\tchars = \"%s\"\n\t\tc_key \"%s\"\n\t\ts_key \"%s\"\n\t\tm_key \"%s\"\n\t\tg_key \"%s\"\n",
-			i, img->clr.chars[i], img->clr.keys[i].c, img->clr.keys[i].s, img->clr.keys[i].m, img->clr.keys[i].g);
+		printf("colour\t%u\tchars %s\n\t\tc_key %s\n\t\tm_key %s\n"
+			"\t\ts_key %s\n\t\tg_key %s\n", i, img->clr.chars[i],
+		 	img->clr.keys[i].c, img->clr.keys[i].m, img->clr.keys[i].s,
+		 	img->clr.keys[i].g);
 		++i;
 		if (i < img->cn)
-			printf("------------\n");
+			printf("---------------------------\n");
 	}
 	i = 0;
 	printf("===================================\n");

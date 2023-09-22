@@ -8,20 +8,16 @@
 # include "typeft.h"
 
 # ifdef DEBUG
-
-#  include <stdio.h>
-#  define DEBUG_FUNC() printf("Entering: %s\n", __func__);
-
+#  define DEBUG_FUNC() write(1, __func__, strlen(__func__));
 # else
-
 #  define DEBUG_FUNC() ;
 # endif
 
 typedef struct s_colourkeys
 {
 	char	*c;
-	char	*s;
 	char	*m;
+	char	*s;
 	char	*g;
 }	t_colourkeys;
 
@@ -47,10 +43,12 @@ typedef struct s_file
 	t_ulong	size;
 }	t_file;
 
-t_file		file_load(const char *file_name);
-void		file_destroy(t_file *file);
 void		*ft_2d_malloc(t_ulong col, t_ulong row, t_ulong size);
 void		*ft_2d_calloc(t_ulong col, t_ulong row, t_ulong size);
+void		decapitalise(char *str);
+
+t_file		file_load(const char *file_name);
+void		file_destroy(t_file *file);
 
 int			ft_pos_strstr_quote(char *str, char *to_find, t_ulong size);
 int			ft_pos_strstr(char *str, char *to_find, t_ulong size);
