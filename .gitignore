@@ -1,4 +1,10 @@
+obj/
+obj_debug/
+obj/*
+obj_debug/*
 *.o
 *.xpm
 *.out
+prog
+prog_debug
 main.c

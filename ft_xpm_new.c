@@ -1,10 +1,11 @@
 #include "xpmft_int.h"
+#include <stdlib.h>
 
 void	*ft_xpm_new(t_ulong width, t_ulong height)
 {
-	DEBUG_FUNC();
 	t_xpm	*ret;
 
+	DEBUG_FUNC;
 	ret = malloc(sizeof(t_xpm));
 	if (ret)
 	{

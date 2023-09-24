@@ -12,7 +12,6 @@ int	main(int argc, char *argv[])
 	{
 		img = ft_xpm_convert(argv[i]);
 		ft_xpm_put_imgdata(img);
-		ft_xpm_destroy(img);
 		++i;
 	}
 }

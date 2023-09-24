@@ -1,25 +1,30 @@
 #include "xpmft_int.h"
+#include <stdlib.h>
 
 void	ft_xpm_destroy(t_xpm *img)
 {
-	DEBUG_FUNC();
 	t_uint	i;
 
+	DEBUG_FUNC;
 	if (img)
 	{
 		i = 0;
 		while (i < img->cn)
 		{
-			free(img->clr.chars[i]);
-			free(img->clr.keys[i].c);
-			free(img->clr.keys[i].s);
-			free(img->clr.keys[i].m);
-			free(img->clr.keys[i].g);
+			free(img->clr[i].chars);
+			free(img->clr[i].key_c);
+			free(img->clr[i].key_s);
+			free(img->clr[i].key_m);
+			free(img->clr[i].key_g);
+			free(img->clr[i].key_g4);
+			img->clr[i] = (t_colour){};
 			++i;
 		}
-		free(img->clr.chars);
-		free(img->clr.keys);
-		free(img->data);
+		if (img->clr)
+			free(img->clr);
+		if (img->data)
+			free(img->data);
+		*img = (t_xpm){};
 		free(img);
 	}
 }

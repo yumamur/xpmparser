@@ -1,11 +1,11 @@
-// #include <stdlib.h>
 #include "xpmft_int.h"
+#include <stdlib.h>
 
 static int	count_words(char *str)
 {
-	DEBUG_FUNC();
 	int	ret;
 
+	DEBUG_FUNC;
 	ret = 0;
 	while (*str)
 	{
@@ -21,10 +21,10 @@ static int	count_words(char *str)
 
 char	**ft_str_wordtab(char *str)
 {
-	DEBUG_FUNC();
 	char	**ret;
 	int		ct_word;
 
+	DEBUG_FUNC;
 	ct_word = count_words(str);
 	ret = malloc(++ct_word * sizeof(char *));
 	if (!ret)

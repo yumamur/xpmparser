@@ -1,13 +1,16 @@
 #include "xpmft_int.h"
+#include <unistd.h>
+#include <fcntl.h>
+#include <stdlib.h>
 
 static t_ulong inline	file_get_size(t_c_char *file_name)
 {
-	DEBUG_FUNC();
 	int		fd;
 	char	buf[50];
 	t_ulong	rd_byte;
 	t_ulong	ret;
 
+	DEBUG_FUNC;
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)
 		return (-1);
@@ -28,17 +31,17 @@ static t_ulong inline	file_get_size(t_c_char *file_name)
 
 void	file_destroy(t_file *file)
 {
-	DEBUG_FUNC();
+	DEBUG_FUNC;
 	free(file->addr);
 	*file = (t_file){};
 }
 
 t_file	file_load(t_c_char *file_name)
 {
-	DEBUG_FUNC();
 	int		fd;
 	t_file	data;
 
+	DEBUG_FUNC;
 	data.size = file_get_size(file_name);
 	fd = open(file_name, O_RDONLY);
 	if (fd == -1)

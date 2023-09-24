@@ -1,11 +1,12 @@
 #include "xpmft_int.h"
+#include <string.h>
 
 int	ft_pos_strstr(char *str, char *to_find, t_ulong size)
 {
-	DEBUG_FUNC();
 	t_ulong	pos;
 	t_ulong	ctl;
 
+	DEBUG_FUNC;
 	if (strlen(to_find) > size)
 		return (-1);
 	pos = 0;
@@ -25,9 +26,9 @@ int	ft_pos_strstr(char *str, char *to_find, t_ulong size)
 
 int	ft_pos_strstr_quote(char *str, char *to_find, t_ulong size)
 {
-	DEBUG_FUNC();
 	t_ulong	var[3];
 
+	DEBUG_FUNC;
 	if (strlen(to_find) > size)
 		return (-1);
 	var[0] = 0;

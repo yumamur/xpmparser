@@ -1,7 +1,10 @@
+#include "xpmft_int.h"
+
 void	decapitalise(char *str)
 {
 	unsigned int	i;
 
+	DEBUG_FUNC;
 	if (!str)
 		return ;
 	i = 0;
