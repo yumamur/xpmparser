@@ -3,6 +3,7 @@
 
 # include "typeft.h"
 # include "endianft.h"
+# include "../leakproof-c/leakproof.h"
 
 # ifndef DEBUG
 #  define DEBUG_FUNC ;
@@ -59,4 +60,6 @@ t_uint		xpmparse_hash_argb_to_int(char hexstr[]);
 int			xpmparse_colour_row(char *row, t_colour *clr, t_ulong cpp);
 t_uint		xpmparse_find_colour(t_xpm *img, char *row);
 void		xpmparse_pixel_row(char *row, t_xpm *xpm, t_ulong row_nbr);
+
+t_colour	*ft_xpm_int_congregate_colours(t_uint count, ...);
 #endif

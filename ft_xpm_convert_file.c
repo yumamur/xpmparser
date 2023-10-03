@@ -1,7 +1,7 @@
 #include "xpmft_int.h"
-#include "xpmft.h"
 #include <stdlib.h>
-#include "../leakproof-c/leakproof.h"
+
+void	ft_xpm_destroy(void *xpm);
 
 void	*ft_xpm_convert(const char *file_name)
 {

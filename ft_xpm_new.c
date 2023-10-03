@@ -13,6 +13,11 @@ void	*ft_xpm_new(t_ulong width, t_ulong height)
 		ret->width = width;
 		ret->height = height;
 		ret->data = ft_2d_calloc(ret->width, ret->height, sizeof(int));
+		if (!ret->data)
+		{
+			*ret = (t_xpm){};
+			return (NULL);
+		}
 	}
 	return (ret);
 }
